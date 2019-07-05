@@ -1,32 +1,20 @@
 # contacts-api-clojure
 
-FIXME: description
+Example contacts REST API for demo in Clojure
 
-## Installation
+## Libraries
 
-Download from http://example.com/FIXME.
+1. [Http-Kit](https://www.http-kit.org)
+2. [Compojure](https://github.com/weavejester/compojure)
 
 ## Usage
 
-FIXME: explanation
+    $ lein run
 
-    $ java -jar contacts-api-clojure-0.1.0-standalone.jar [args]
+## Routes
 
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+    GET /       => list of contacts
+    GET /:id    => single contact
 
 ## License
 
