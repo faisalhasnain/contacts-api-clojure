@@ -3,27 +3,34 @@
             [compojure.core :refer :all]
             [compojure.coercions :refer :all]
             [compojure.route :as route]
-            [clojure.data.json :as json]))
+            [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
+            [ring.util.response :refer [response]]))
 
-(def contacts [{:id 1 :name "Faisal" :age 28}
-               {:id 2 :name "Sana" :age 23}])
+(def contacts (atom [{:id 1 :name "Faisal" :twitter "faisalhasnainz"}
+                     {:id 2 :name "Paul" :twitter "paulg"}]))
 
 (defn get-contacts []
-  contacts)
+  @contacts)
 
 (defn get-contact [id]
-  (first (filter #(= (:id %) id) contacts)))
+  (first (filter #(= (:id %) id) @contacts)))
 
-(defn render-response [resp]
-  {:status  200
-   :headers {"Content-Type" "text/json"}
-   :body    (json/write-str resp)})
+(defn add-contact [contact]
+  (swap! contacts conj contact)
+  contact)
+
+(defn remove-contact [id]
+  (let [contact (get-contact id)]
+    (swap! contacts (fn [arr] (remove #(= (:id %) id) arr)))
+    contact))
 
 (defroutes app-routes
-  (GET "/" [] (render-response (get-contacts)))
-  (GET "/:id" [id :<< as-int] (render-response (get-contact id)))
+  (GET "/" [] (response (get-contacts)))
+  (GET "/:id" [id :<< as-int] (response (get-contact id)))
+  (POST "/" req (response (add-contact (:body req))))
+  (DELETE "/:id" [id :<< as-int] (response (remove-contact id)))
   (route/not-found "Error, page not found!"))
 
 (defn -main [& args]
-  (run-server #'app-routes {:port 8000})
+  (run-server (->  #'app-routes (wrap-json-body) (wrap-json-response)) {:port 8000})
   (println "Web server listening on port: 8000"))

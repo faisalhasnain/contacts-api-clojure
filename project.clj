@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [http-kit "2.3.0"]
                  [compojure "1.6.1"]
-                 [org.clojure/data.json "0.2.6"]]
+                 [ring/ring-json "0.4.0"]]
   :main ^:skip-aot contacts-api-clojure.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
