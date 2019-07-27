@@ -1,5 +1,5 @@
 (ns contacts-api-clojure.core
-  (:require [org.httpkit.server :refer [run-server]]
+  (:require [ring.adapter.jetty :refer [run-jetty]]
             [compojure.core :refer :all]
             [compojure.coercions :refer :all]
             [compojure.route :as route]
@@ -32,5 +32,5 @@
   (route/not-found "Error, page not found!"))
 
 (defn -main [& args]
-  (run-server (->  #'app-routes (wrap-json-body) (wrap-json-response)) {:port 8000})
+  (run-jetty (->  #'app-routes (wrap-json-body) (wrap-json-response)) {:port 8000})
   (println "Web server listening on port: 8000"))
