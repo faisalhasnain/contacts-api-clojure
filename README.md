@@ -4,8 +4,8 @@ Example contacts REST API for demo in Clojure
 
 ## Libraries
 
-1. [Http-Kit](https://www.http-kit.org)
-2. [Compojure](https://github.com/weavejester/compojure)
+1. [ring](https://github.com/ring-clojure/ring)
+2. [reitit](https://github.com/metosin/reitit)
 
 ## Usage
 
