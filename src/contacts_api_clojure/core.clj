@@ -29,5 +29,5 @@
      ["/:id" {:get get-contact :delete remove-contact}]])))
 
 (defn -main [& args]
-  (run-jetty (->  #'router (wrap-json-body) (wrap-json-response)) {:port 8000})
+  (run-jetty (->  #'router (wrap-json-body {:keywords? true}) (wrap-json-response)) {:port 8000})
   (println "Web server listening on port: 8000"))
